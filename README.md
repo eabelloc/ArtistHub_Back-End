@@ -1,2 +1,1 @@
-# ArtistHub_Back-End
-Neoland, Back End of our Final Project: Elias Bello &amp; Daniel Morillas
+TODO: PREGUNTAR A ANTONIO/ALBERTO SOBRE AÑADIR MAS DE UNA IMAGEN/VIDEO
