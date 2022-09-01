@@ -44,7 +44,7 @@ const register = async (req, res, next) => {
 
 const login = async (req, res, next) => {
     try {
-      const userInDb = await User.findOne({ email: req.body.email });
+      const userInDb = await User.findOne({ username: req.body.username });
       if (!userInDb) return next(setError(404, "User not found"));
       if (bcrypt.compareSync(req.body.password, userInDb.password)) {
         const token = createToken(userInDb._id, userInDb.username);

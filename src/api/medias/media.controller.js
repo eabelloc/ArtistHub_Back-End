@@ -46,16 +46,13 @@ const create = async (req, res, next) => {
       else if (req.file) {
         newMedia.mediaVideo = req.file.path;
       }
-      else if (req.url) {
-        newMedia.mediaSpotify = req.url.path;
-      }
       const mediaInDb = await newMedia.save();
       res.status(201).json(mediaInDb);
     } catch (error) {
         return next(setError(500, 'Failed creating media'))
     };
 }
-//TODO: VER SI FUNCINA
+//TODO: VER CÓMO SUBIR VARIOS ARCHIVOS (CLOUDINARY, MULTER Y EXPRESS)
 const update = async (req, res, next) => {
     try{
     const { id } = req.params;
@@ -67,9 +64,6 @@ const update = async (req, res, next) => {
       else if (req.file) {
         media.mediaVideo = req.file.path;
       }
-      else if (req.url) {
-        media.mediaSpotify = req.url.path;
-      }
     const updatedMedia = await Media.findByIdAndUpdate(id, media)
     if (!updatedMedia) return next(setError(404, 'Media not found'));
     return res.satus(201).json({
@@ -78,7 +72,7 @@ const update = async (req, res, next) => {
     });
 }
     catch (error) {
-        return next(setError(500, error.message || 'Failed updating media'));
+      return next(setError(500, error.message || 'Failed updating media'));
     };
 }
 
@@ -91,9 +85,6 @@ const remove = async (req, res, next) => {
       }
       else if (deletedMedia.mediaVideo) {
         deleteFile(deletedMedia.mediaVideo);
-      }
-      else if (deletedMedia.mediaSpotify) {
-        deleteUrl(deletedMedia.mediaSpotify);
       }
       if (!deletedMedia) {
         return next(setError(404, "Media not found"));

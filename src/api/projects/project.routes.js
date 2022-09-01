@@ -17,4 +17,6 @@ ProjectRoutes.post("/create", [authorize], upload.single("projectImage", "projec
 ProjectRoutes.patch("/:id", [authorize], upload.single("projectImage", "projectVideo"), update);
 ProjectRoutes.delete("/:id", [authorize], remove);
 
+//TODO: como subir varios archivos con cloudinary, multer y express
+
 module.exports = ProjectRoutes;

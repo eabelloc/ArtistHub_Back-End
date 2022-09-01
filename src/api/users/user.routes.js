@@ -10,8 +10,8 @@ const {
     update, 
     remove } = require("./user.controller");
 
-UserRoutes.get('/', [authorize], getAll);
-UserRoutes.get('/:id', [authorize], getById);
+UserRoutes.get('/', getAll);
+UserRoutes.get('/:id', getById);
 UserRoutes.post('/register', upload.single("avatar"), register);
 UserRoutes.post('/login', login);
 UserRoutes.patch('/:id', [authorize], upload.single("avatar"), update);
