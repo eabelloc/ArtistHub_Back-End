@@ -34,12 +34,6 @@ const getAll = async (req, res, next) => {
 const create = async (req, res, next) => {
     try {
       const newProject = new Project(req.body);
-      const projectExist = await Project.findOne({
-        project: newProject.project,
-      })
-      if (projectExist) {
-        return next(setError(409, 'Project already exists'))
-      }
       if (req.file) {
         newProject.projectImage = req.file.path;
       }

@@ -34,12 +34,6 @@ const getById = async (req, res, next) => {
 const create = async (req, res, next) => {
     try {
       const newSocialMedia = new SocialMedia(req.body);
-      const socialMediaExist = await SocialMedia.findOne({
-        socialMedia: newSocialMedia.socialMedia,
-      })
-      if (socialMediaExist) {
-        return next(setError(409, 'SocialMedia already exists'))
-      }
       const socialMediaInDb = await newSocialMedia.save();
       res.status(201).json(socialMediaInDb);
     } catch (error) {

@@ -34,12 +34,6 @@ const getById = async (req, res, next) => {
 const create = async (req, res, next) => {
     try {
       const newMedia = new Media(req.body);
-      const mediaExist = await Media.findOne({
-        media: newMedia.media,
-      })
-      if (mediaExist) {
-        return next(setError(409, 'Media already exists'))
-      }
       if (req.file) {
         newMedia.mediaImage = req.file.path;
       }

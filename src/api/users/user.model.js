@@ -13,7 +13,7 @@ const schema = new Schema({
    avatar: {type: String, require: false},
    userType: {type: String, enum: USERTYPE, require: true},
    projects: [{type: Schema.Types.ObjectId, ref:"projects"}],
-   favProjects: [{type: String, require: false}],
+   favProjects: [{type: Schema.Types.ObjectId, ref:"projects"}],
    medias: [{type: Schema.Types.ObjectId, ref:"medias"}],
    userIntro: {type: String, require: false},
    socialMedia: [{type: Schema.Types.ObjectId, ref:"socialMedia"}]
