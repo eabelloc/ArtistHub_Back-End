@@ -5,7 +5,7 @@ const { deleteFile } = require("../../middleware/delete-file");
 
 const getAll = async (req, res, next) => {
     try {
-      const projects = await Project.find()//.sort({ createAt: 'desc' });
+      const projects = await Project.find().populate("users")
       return res.status(200).json({
         message: 'All projects',
         projects
@@ -18,7 +18,7 @@ const getAll = async (req, res, next) => {
   const getById = async (req, res, next) => {
     try {
       const { id } = req.params;
-      const project = await (await Project.findById(id));
+      const project = await (await Project.findById(id)).populate("users");
       if (!project) return next(setError(404, error.message | 'Project not found'));
       return res.status(200).json({
         message: 'project by Id',

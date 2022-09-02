@@ -7,7 +7,7 @@ const { deleteFile } = require('../../middleware/delete-file');
 
 const getAll = async (req, res, next) => {
     try {
-        const users = await User.find()
+        const users = await User.find().populate("projects medias socialMedia");
         return res.status(200).json({
             message: 'All Users',
             users
@@ -20,7 +20,7 @@ const getAll = async (req, res, next) => {
 const getById = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const user = await User.findById(id);
+        const user = await User.findById(id).populate("projects medias socialmedias");
         if (!user) return next(setError(404, "User not found"));
         return res.status(200).json(user);
     } catch (error) {

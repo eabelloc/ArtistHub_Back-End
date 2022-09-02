@@ -5,7 +5,7 @@ const { deleteFile } = require("../../middleware/delete-file");
 
 const getAll = async (req, res, next) => {
     try {
-      const medias = await Media.find()//.sort({ createAt: 'desc' });
+      const medias = await Media.find().populate("users")//.sort({ createAt: 'desc' });
       return res.status(200).json({
         message: 'All medias',
         medias
@@ -18,7 +18,7 @@ const getAll = async (req, res, next) => {
 const getById = async (req, res, next) => {
     try {
       const { id } = req.params;
-      const media = await (await Media.findById(id));
+      const media = await (await Media.findById(id)).populate("users");
       if (!media) return next(setError(404, error.message | 'Media not found'));
       return res.status(200).json({
         message: 'media by Id',
@@ -58,7 +58,7 @@ const update = async (req, res, next) => {
       else if (req.file) {
         media.mediaVideo = req.file.path;
       }
-    const updatedMedia = await Media.findByIdAndUpdate(id, media)
+    const updatedMedia = await Media.findByIdAndUpdate(id, media);
     if (!updatedMedia) return next(setError(404, 'Media not found'));
     return res.status(201).json({
         message: 'Updated media',

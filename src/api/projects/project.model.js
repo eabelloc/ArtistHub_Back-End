@@ -7,6 +7,7 @@ const schema = new Schema({
     //TODO: PREGUNTAR A ANTONIO/ALBERTO SOBRE AÑADIR MAS DE UNA IMAGEN/VIDEO
     projectImage: {type: String, require: false},
     projectVideo: {type: String, require: false},
+    users: [{ type: Schema.Types.ObjectId, ref:"users"}]
     
     
     //songs: [{ type: Schema.Types.ObjectId, ref:"songs"}],

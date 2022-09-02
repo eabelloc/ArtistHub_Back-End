@@ -5,7 +5,7 @@ const { deleteFile } = require("../../middleware/delete-file");
 
 const getAll = async (req, res, next) => {
     try {
-      const socialMedias = await SocialMedia.find()
+      const socialMedias = await SocialMedia.find().populate("users")
       return res.status(200).json({
         message: 'All socialmedias',
         socialMedias
@@ -18,7 +18,7 @@ const getAll = async (req, res, next) => {
 const getById = async (req, res, next) => {
     try {
       const { id } = req.params;
-      const socialMedia = await (await SocialMedia.findById(id));
+      const socialMedia = await (await SocialMedia.findById(id)).populate("users");
       if (!socialMedia) return next(setError(404, error.message | 'SocialMedia not found'));
       return res.status(200).json({
         message: 'socialmedia by Id',
@@ -46,7 +46,7 @@ const update = async (req, res, next) => {
     const { id } = req.params;
     const socialMedia = new SocialMedia(req.body);
     socialMedia._id = id;
-    const updatedSocialMedia = await SocialMedia.findByIdAndUpdate(id, socialMedia)
+    const updatedSocialMedia = await SocialMedia.findByIdAndUpdate(id, socialMedia);
     if (!updatedSocialMedia) return next(setError(404, 'SocialMedia not found'));
     return res.status(201).json({
         message: 'Updated socialMedia',

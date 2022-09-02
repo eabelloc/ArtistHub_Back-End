@@ -6,7 +6,8 @@ const schema = new Schema({
     location: {type: String, require: false},
     website: {type: String, require: false},
     twitter: {type: String, require: false},
-    linkedin: {type: String, require: false}
+    linkedin: {type: String, require: false},
+    users: [{ type: Schema.Types.ObjectId, ref:"users"}]
 },
     {
         timestamps: true

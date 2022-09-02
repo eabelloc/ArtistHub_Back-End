@@ -7,7 +7,8 @@ const schema = new Schema({
     mediaSpotify: {type: String, require: false},
     //TODO: PREGUNTAR A ANTONIO/ALBERTO SOBRE AÑADIR MAS DE UNA IMAGEN/VIDEO
     mediaImage: {type: String, require: false},
-    mediaVideo: {type: String, require: false}
+    mediaVideo: {type: String, require: false},
+    users: [{ type: Schema.Types.ObjectId, ref:"users"}]
     
     
     //songs: [{ type: Schema.Types.ObjectId, ref:"songs"}],
