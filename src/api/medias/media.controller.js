@@ -66,7 +66,7 @@ const update = async (req, res, next) => {
       }
     const updatedMedia = await Media.findByIdAndUpdate(id, media)
     if (!updatedMedia) return next(setError(404, 'Media not found'));
-    return res.satus(201).json({
+    return res.status(201).json({
         message: 'Updated media',
         updatedMedia
     });

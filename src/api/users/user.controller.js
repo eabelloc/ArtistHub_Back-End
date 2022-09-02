@@ -3,6 +3,7 @@ const User = require('./user.model');
 const bcrypt = require("bcrypt");
 const { createToken } = require("../../helpers/utils/token-action");
 const { setError } = require("../../helpers/utils/error");
+const { deleteFile } = require('../../middleware/delete-file');
 
 const getAll = async (req, res, next) => {
     try {
@@ -73,7 +74,7 @@ const update = async (req, res, next) => {
       })
   
     } catch (error) {
-      return next(setError(500, error.message || 'Failed updated user'));
+      return next(setError(500, error.message | 'Failed updated user'));
     }
   }
 
@@ -81,6 +82,9 @@ const remove = async (req, res, next) => {
     try {
       const { id } = req.params;
       const deletedUser = await User.findByIdAndDelete(id);
+      if (deletedUser.avatar) {
+        deleteFile(deletedUser.avatar)
+      }
       if (!deletedUser) return next(setError(404, 'User not found'));
       return res.status(200).json({
         message: 'Delete User',

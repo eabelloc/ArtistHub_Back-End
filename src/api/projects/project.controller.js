@@ -43,9 +43,6 @@ const create = async (req, res, next) => {
       if (req.file) {
         newProject.projectImage = req.file.path;
       }
-      else if (req.file) {
-        newProject.projectVideo = req.file.path;
-      }
       const projectInDb = await newProject.save();
       res.status(201).json(projectInDb);
     } catch (error) {
@@ -61,12 +58,9 @@ const update = async (req, res, next) => {
     if (req.file) {
         project.projectImage = req.file.path;
       }
-      else if (req.file) {
-        project.projectVideo = req.file.path;
-      }
     const updatedProject = await Project.findByIdAndUpdate(id, project)
     if (!updatedProject) return next(setError(404, 'Project not found'));
-    return res.satus(201).json({
+    return res.status(201).json({
         message: 'Updated project',
         updatedProject
     });
@@ -82,9 +76,6 @@ const remove = async (req, res, next) => {
       const deletedProject = await Project.findOneAndDelete(id);
       if (deletedProject.projectImage) {
         deleteFile(deletedProject.projectImage);
-      }
-      else if (deletedProject.projectVideo) {
-        deleteFile(deletedProject.projectVideo);
       }
       if (!deletedProject) {
         return next(setError(404, "Project not found"));
