@@ -13,4 +13,4 @@ const schema = new Schema({
     }
 );
 
-module.exports = mongoose.model('socialmedia', schema);
+module.exports = mongoose.model('socialMedia', schema);

@@ -13,8 +13,8 @@ const upload = require("../../middleware/file");
 SocialMediaRoutes.get("/", getAll);
 SocialMediaRoutes.get("/:id", getById);
 //TODO: ver como pasar mas de un documento o url:
-SocialMediaRoutes.post("/create", [authorize], upload.single("website", "twitter", "linkedin"), create);
-SocialMediaRoutes.patch("/:id", [authorize], upload.single("website", "twitter", "linkedin"), update);
+SocialMediaRoutes.post("/create", [authorize], create);
+SocialMediaRoutes.patch("/:id", [authorize], update);
 SocialMediaRoutes.delete("/:id", [authorize], remove);
 
 module.exports = SocialMediaRoutes;

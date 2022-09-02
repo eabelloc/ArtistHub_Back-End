@@ -12,11 +12,11 @@ const schema = new Schema({
    email: {type: String, require: true, unique: true},
    avatar: {type: String, require: false},
    userType: {type: String, enum: USERTYPE, require: true},
-   projects: [{type: String, require: false, unique: true}],
-   favProjects: [{type: String, require: false, unique: true}],
-   medias: [{type: String, require: false, unique: true}],
+   projects: [{type: Schema.Types.ObjectId, ref:"projects"}],
+   favProjects: [{type: String, require: false}],
+   medias: [{type: Schema.Types.ObjectId, ref:"medias"}],
    userIntro: {type: String, require: false},
-   socialMedia: [{type: String, require: false, unique: true}]
+   socialMedia: [{type: Schema.Types.ObjectId, ref:"socialMedia"}]
 }, 
     {
         timestamps: true

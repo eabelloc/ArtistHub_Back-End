@@ -13,8 +13,8 @@ const upload = require("../../middleware/file");
 ProjectRoutes.get("/", getAll);
 ProjectRoutes.get("/:id", getById);
 //TODO: ver como pasar mas de un documento o url:
-ProjectRoutes.post("/create", [authorize], upload.single("projectImage", "projectVideo"), create);
-ProjectRoutes.patch("/:id", [authorize], upload.single("projectImage", "projectVideo"), update);
+ProjectRoutes.post("/create", [authorize], upload.single("projectImage"), create);
+ProjectRoutes.patch("/:id", [authorize], upload.single("projectImage"), update);
 ProjectRoutes.delete("/:id", [authorize], remove);
 
 //TODO: como subir varios archivos con cloudinary, multer y express
