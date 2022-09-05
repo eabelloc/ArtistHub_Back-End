@@ -2,7 +2,6 @@ const ProjectRoutes = require('express').Router();
 const { authorize } = require("../../middleware/auth");
 const {
     getAll,
-    getByUserId,
     getById,
     getByProjectTitle,
     create,
@@ -13,7 +12,6 @@ const {
 const upload = require("../../middleware/file");
 
 ProjectRoutes.get("/", getAll);
-ProjectRoutes.get("/users/:id", getByUserId);
 ProjectRoutes.get("/:id", getById);
 ProjectRoutes.get("/:projectTitle", getByProjectTitle);
 ProjectRoutes.post("/create", [authorize], upload.single("projectImage"), create);

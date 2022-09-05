@@ -15,19 +15,6 @@ const getAll = async (req, res, next) => {
     }
   }
 
-  const getByUserId = async (req, res, next) => {
-    try {
-      const users = {_id: ":id"}
-      const projects = await Project.findOne(users)
-      return res.status(200).json({
-        message: 'All projects',
-        projects
-      })
-    } catch (error) {
-      return next(setError(500, error.message | 'Failed recover all projects by userID'));
-    }
-  }
-
   const getById = async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -114,7 +101,6 @@ const remove = async (req, res, next) => {
   module.exports = {
     getAll,
     getById,
-    getByUserId,
     getByProjectTitle,
     create,
     update,
