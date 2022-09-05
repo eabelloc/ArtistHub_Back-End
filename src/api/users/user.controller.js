@@ -7,7 +7,7 @@ const { deleteFile } = require('../../middleware/delete-file');
 
 const getAll = async (req, res, next) => {
     try {
-        const users = await User.find().populate("projects medias socialMedia");
+        const users = await User.find().populate("projects medias socialMedia favProjects");
         return res.status(200).json({
             message: 'All Users',
             users
@@ -20,13 +20,62 @@ const getAll = async (req, res, next) => {
 const getById = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const user = await User.findById(id).populate("projects medias socialmedias");
+        const user = await User.findById(id).populate("projects medias socialMedia favProjects");
         if (!user) return next(setError(404, "User not found"));
         return res.status(200).json(user);
     } catch (error) {
         return next(setError(500, error.message || 'Failed recover User'));
         }
 };
+
+const getByUsername = async (req, res, next) => {
+  try {
+    const {username} = req.params;
+    const user = await User.find({username:username}).populate("projects medias socialMedia favProjects");
+    if (!user) return next(setError(404, 'User not found'));
+    return res.json({
+        status: 200,
+        message: 'Recovered user by username',
+        data: { user }
+    });
+} catch (error) {
+    return next(setError(500, 'Failed user by username'))
+}
+}
+
+const getProjectsByUsername = async (req, res, next) => {
+  try {
+    const {username} = req.params;
+    const user = await User.findOne({username:username}).populate("projects");
+    const {projects} = user
+    if (!user) return next(setError(404, 'User not found'));
+    return res.json({
+      status: 200,
+      message: 'Recovered projects by username',
+      data: {username: username, projects}
+  });
+
+  } catch (error) {
+    return next(setError(500, error.message || 'Failed to recover projects by username')) 
+  }
+}
+
+const getMediasByUsername = async (req, res, next) => {
+  try {
+    const {username} = req.params;
+    const user = await User.findOne({username:username}).populate("medias");
+    const {medias} = user
+    if (!user) return next(setError(404, 'User not found'));
+    return res.json({
+      status: 200,
+      message: 'Recovered medias by username',
+      data: {username: username, medias}
+  });
+
+  } catch (error) {
+    return next(setError(500, error.message || 'Failed to recover medias by username')) 
+  }
+}
 
 const register = async (req, res, next) => {
     try {
@@ -95,9 +144,13 @@ const remove = async (req, res, next) => {
     }
   }
 
+  //TODO: bySocialmedia: byTwitter & byLinkedIn
   module.exports = { 
     getAll, 
     getById,
+    getByUsername,
+    getProjectsByUsername,
+    getMediasByUsername,
     register, 
     login, 
     update, 

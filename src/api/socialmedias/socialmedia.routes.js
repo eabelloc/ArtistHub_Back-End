@@ -3,6 +3,8 @@ const { authorize } = require("../../middleware/auth");
 const {
     getAll,
     getById,
+    getByTwitter,
+    getByLinkedIn,
     create,
     update,
     remove
@@ -12,7 +14,8 @@ const upload = require("../../middleware/file");
 
 SocialMediaRoutes.get("/", getAll);
 SocialMediaRoutes.get("/:id", getById);
-//TODO: ver como pasar mas de un documento o url:
+SocialMediaRoutes.get("/:twitter", getByTwitter);
+SocialMediaRoutes.get("/:linkedin", getByLinkedIn);
 SocialMediaRoutes.post("/create", [authorize], create);
 SocialMediaRoutes.patch("/:id", [authorize], update);
 SocialMediaRoutes.delete("/:id", [authorize], remove);

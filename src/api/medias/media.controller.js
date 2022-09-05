@@ -30,6 +30,21 @@ const getById = async (req, res, next) => {
     }
 }
 
+const getByMediaTitle = async (req, res, next) => {
+  try {
+    const {mediaTitle} = req.params;
+    const media = await Media.find({mediaTitle:mediaTitle}).populate("users");
+    if (!media) return next(setError(404, 'Media not found'));
+    return res.json({
+        status: 200,
+        message: 'Recovered media by mediaTitle',
+        data: { media }
+    });
+} catch (error) {
+    return next(setError(500, 'Failed media by mediaTitle'))
+}
+}
+
 //TODO: VER SI ESTO FUNCIO (ES PROBABLE QUE DE ERRORES xD)
 const create = async (req, res, next) => {
     try {
@@ -91,10 +106,11 @@ const remove = async (req, res, next) => {
       return next(setError(500, error.message || "Failed deleting Media"));
     }
   };
-
+  //TODO: byUserId
   module.exports = {
     getAll,
     getById,
+    getByMediaTitle,
     create,
     update,
     remove

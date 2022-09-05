@@ -16,7 +16,7 @@ const schema = new Schema({
    favProjects: [{type: Schema.Types.ObjectId, ref:"projects"}],
    medias: [{type: Schema.Types.ObjectId, ref:"medias"}],
    userIntro: {type: String, require: false},
-   socialMedia: [{type: Schema.Types.ObjectId, ref:"socialMedia"}]
+   socialMedia: {type: Schema.Types.ObjectId, ref:"socialMedia"}
 }, 
     {
         timestamps: true

@@ -7,7 +7,7 @@ const schema = new Schema({
     website: {type: String, require: false},
     twitter: {type: String, require: false},
     linkedin: {type: String, require: false},
-    users: [{ type: Schema.Types.ObjectId, ref:"users"}]
+    users: { type: Schema.Types.ObjectId, ref:"users"}
 },
     {
         timestamps: true
