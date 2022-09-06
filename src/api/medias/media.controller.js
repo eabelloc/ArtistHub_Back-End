@@ -15,6 +15,19 @@ const getAll = async (req, res, next) => {
     }
   }
 
+  //TODO: EL GET BY DATE DE MEDIAS NO ESTA FUNCIONANDO!
+  const getDate = async (req, res, next) => {
+    try {
+      const medias = await Media.find().sort({ createAt: 'desc' }).populate("users");
+      return res.status(200).json({
+        message: 'All medias by date',
+        medias
+      })
+    } catch (error) {
+      return next(setError(500, error.message | 'Failed recover all media by date'));
+    }
+  }
+
 const getById = async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -106,11 +119,12 @@ const remove = async (req, res, next) => {
       return next(setError(500, error.message || "Failed deleting Media"));
     }
   };
-  //TODO: byUserId
+
   module.exports = {
     getAll,
     getById,
     getByMediaTitle,
+    getDate,
     create,
     update,
     remove

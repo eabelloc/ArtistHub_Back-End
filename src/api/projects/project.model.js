@@ -7,11 +7,6 @@ const schema = new Schema({
     projectImage: {type: String, require: false},
     projectVideo: {type: String, require: false},
     users: {type: Schema.Types.ObjectId, ref:"users"},
-    date: {}
-    
-    
-    //songs: [{ type: Schema.Types.ObjectId, ref:"songs"}],
-
 },
     {
         timestamps: true

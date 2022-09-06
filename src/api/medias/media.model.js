@@ -8,8 +8,6 @@ const schema = new Schema({
     mediaImage: {type: String, require: false},
     mediaVideo: {type: String, require: false},
     users: { type: Schema.Types.ObjectId, ref:"users"},
-    date: {}
-
 },
     {
         timestamps: true

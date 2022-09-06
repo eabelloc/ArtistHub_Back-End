@@ -5,7 +5,20 @@ const { deleteFile } = require("../../middleware/delete-file");
 
 const getAll = async (req, res, next) => {
     try {
-      const projects = await Project.find().populate("users")
+      const projects = await Project.find().sort({createdAt: "desc"}).populate("users")
+      return res.status(200).json({
+        message: 'All projects',
+        projects
+      })
+    } catch (error) {
+      return next(setError(500, error.message | 'Failed recover all projects'));
+    }
+  }
+
+    //TODO: EL GET BY DATE DE PROJECTS NO ESTA FUNCIONANDO!
+  const getDate = async (req, res, next) => {
+    try {
+      const projects = await Project.find().sort({createdAt: "desc"}).populate("users")
       return res.status(200).json({
         message: 'All projects',
         projects
@@ -97,11 +110,12 @@ const remove = async (req, res, next) => {
     }
   };
 
-  //TODO: byname(CHECK :3), byUserId, byDate
+  //TODO: ) byDate
   module.exports = {
     getAll,
     getById,
     getByProjectTitle,
+    getDate,
     create,
     update,
     remove
