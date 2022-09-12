@@ -5,7 +5,7 @@ const { deleteFile } = require("../../middleware/delete-file");
 
 const getAll = async (req, res, next) => {
     try {
-      const projects = await Project.find().sort({createdAt: "desc"}).populate("users")
+      const projects = await Project.find().populate("users")//.sort({createdAt: "desc"})
       return res.status(200).json({
         message: 'All projects',
         projects
@@ -18,7 +18,7 @@ const getAll = async (req, res, next) => {
     //TODO: EL GET BY DATE DE PROJECTS NO ESTA FUNCIONANDO!
   const getDate = async (req, res, next) => {
     try {
-      const projects = await Project.find().sort({createdAt: "desc"}).populate("users")
+      const projects = await Project.find().populate("users")//.sort({createdAt: "desc"})
       return res.status(200).json({
         message: 'All projects',
         projects

@@ -18,7 +18,7 @@ const getAll = async (req, res, next) => {
   //TODO: EL GET BY DATE DE MEDIAS NO ESTA FUNCIONANDO!
   const getDate = async (req, res, next) => {
     try {
-      const medias = await Media.find().sort({ createAt: 'desc' }).populate("users");
+      const medias = await Media.find().populate("users")//.sort({ createAt: 'desc' });
       return res.status(200).json({
         message: 'All medias by date',
         medias

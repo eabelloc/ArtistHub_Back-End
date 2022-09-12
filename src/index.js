@@ -7,7 +7,6 @@ const { setUpCloudinary } = require('./helpers/utils/cloudinary');
 const UserRoutes = require("./api/users/user.routes");
 const ProjectRoutes = require("./api/projects/project.routes");
 const MediaRoutes = require("./api/medias/media.routes");
-const SocialMediaRoutes = require("./api/socialmedias/socialmedia.routes");
 
 dotenv.config()
 
@@ -36,7 +35,6 @@ app.set("secretKey", JWT_SECRET);
 app.use("/api/v1/users", UserRoutes);
 app.use("/api/v1/projects", ProjectRoutes);
 app.use("/api/v1/medias", MediaRoutes);
-app.use("/api/v1/socialmedias", SocialMediaRoutes);
 
 
 app.use((error, _req, res, _next) => {

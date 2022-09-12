@@ -7,7 +7,7 @@ const { deleteFile } = require('../../middleware/delete-file');
 
 const getAll = async (req, res, next) => {
     try {
-        const users = await User.find().populate("projects medias socialMedia favProjects");
+        const users = await User.find().populate("projects medias favProjects");
         return res.status(200).json({
             message: 'All Users',
             users
@@ -20,7 +20,7 @@ const getAll = async (req, res, next) => {
 const getById = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const user = await User.findById(id).populate("projects medias socialMedia favProjects");
+        const user = await User.findById(id).populate("projects medias favProjects");
         if (!user) return next(setError(404, "User not found"));
         return res.status(200).json(user);
     } catch (error) {
@@ -31,7 +31,7 @@ const getById = async (req, res, next) => {
 const getByUsername = async (req, res, next) => {
   try {
     const {username} = req.params;
-    const user = await User.find({username:username}).populate("projects medias socialMedia favProjects");
+    const user = await User.find({username:username}).populate("projects medias favProjects");
     if (!user) return next(setError(404, 'User not found'));
     return res.json({
         status: 200,
@@ -41,7 +41,7 @@ const getByUsername = async (req, res, next) => {
 } catch (error) {
     return next(setError(500, 'Failed user by username'))
 }
-}
+};
 
 const getProjectsByUsername = async (req, res, next) => {
   try {
@@ -58,7 +58,24 @@ const getProjectsByUsername = async (req, res, next) => {
   } catch (error) {
     return next(setError(500, error.message || 'Failed to recover projects by username')) 
   }
-}
+};
+
+const getFavProjectsByUsername = async (req, res, next) => {
+  try {
+    const {username} = req.params;
+    const user = await User.findOne({username:username}).populate("favProjects");
+    const {favProjects} = user
+    if (!user) return next(setError(404, 'User not found'));
+    return res.json({
+      status: 200,
+      message: 'Recovered favourite projects by username',
+      data: {username: username, favProjects}
+  });
+
+  } catch (error) {
+    return next(setError(500, error.message || 'Failed to recover favourite projects by username')) 
+  }
+};
 
 const getMediasByUsername = async (req, res, next) => {
   try {
@@ -75,13 +92,89 @@ const getMediasByUsername = async (req, res, next) => {
   } catch (error) {
     return next(setError(500, error.message || 'Failed to recover medias by username')) 
   }
+};
+
+const getByCompany = async (req, res, next) => {
+  try {
+    const {company} = req.params;
+    const user = await User.find({company:company});
+    if (!user) return next(setError(404, 'User not found'));
+    return res.json({
+        status: 200,
+        message: 'Recovered user by company',
+        data: { user }
+    });
+} catch (error) {
+    return next(setError(500, 'Failed user by company'))
 }
+};
+
+const getByLocation = async (req, res, next) => {
+  try {
+    const {location} = req.params;
+    const user = await User.find({location:location});
+    if (!user) return next(setError(404, 'User not found'));
+    return res.json({
+        status: 200,
+        message: 'Recovered user by location',
+        data: { user }
+    });
+} catch (error) {
+    return next(setError(500, 'Failed user by location'))
+}
+};
+
+const getByWebsite = async (req, res, next) => {
+  try {
+    const {website} = req.params;
+    const user = await User.find({website:website});
+    if (!user) return next(setError(404, 'User not found'));
+    return res.json({
+        status: 200,
+        message: 'Recovered user by website',
+        data: { user }
+    });
+} catch (error) {
+    return next(setError(500, 'Failed user by website'))
+}
+};
+
+const getByTwitter = async (req, res, next) => {
+  try {
+    const {twitter} = req.params;
+    const user = await User.find({twitter:twitter});
+    if (!user) return next(setError(404, 'User not found'));
+    return res.json({
+        status: 200,
+        message: 'Recovered user by twitter',
+        data: { user }
+    });
+} catch (error) {
+    return next(setError(500, 'Failed user by twitter'))
+}
+};
+
+const getByLinkedIn = async (req, res, next) => {
+  try {
+    const {linkedin} = req.params;
+    const user = await User.find({linkedin:linkedin});
+    if (!user) return next(setError(404, 'User not found'));
+    return res.json({
+        status: 200,
+        message: 'Recovered user by linkedin',
+        data: { user }
+    });
+} catch (error) {
+    return next(setError(500, 'Failed user by linkedin'))
+}
+};
 
 const register = async (req, res, next) => {
     try {
         const newUser = new User(req.body);
         const usernameExist = await User.findOne({ username: newUser.username });
-        if (usernameExist) return next(setError(409, "This username already exist"));
+        const emailExist = await User.findOne({ email: newUser.email });
+        if (usernameExist || emailExist) return next(setError(409, "This username || email already exist"));
         if(req.file) {
             newUser.avatar = req.file.path
         }
@@ -105,7 +198,7 @@ const login = async (req, res, next) => {
     } catch (error) {
       return next(setError(500, error.message || 'Unexpected error at login'));
     }
-}
+};
 
 const update = async (req, res, next) => {
     try {
@@ -125,7 +218,7 @@ const update = async (req, res, next) => {
     } catch (error) {
       return next(setError(500, error.message | 'Failed updated user'));
     }
-  }
+  };
 
 const remove = async (req, res, next) => {
     try {
@@ -142,15 +235,20 @@ const remove = async (req, res, next) => {
     } catch (error) {
       return next(setError(500, error.message || 'Failed deleted user'));
     }
-  }
-
-  //TODO: bySocialmedia: byTwitter & byLinkedIn
+  };
+  
   module.exports = { 
     getAll, 
     getById,
     getByUsername,
     getProjectsByUsername,
+    getFavProjectsByUsername,
     getMediasByUsername,
+    getByCompany,
+    getByLocation,
+    getByWebsite,
+    getByTwitter,
+    getByLinkedIn,
     register, 
     login, 
     update, 
