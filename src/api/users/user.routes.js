@@ -21,7 +21,7 @@ const {
 
 UserRoutes.get('/', getAll);
 UserRoutes.get('/:id', getById);
-UserRoutes.get('/:username', getByUsername);
+UserRoutes.get('/username/:username', getByUsername);
 UserRoutes.get('/projects/:username', getProjectsByUsername);
 UserRoutes.get('/favouriteprojects/:username', getFavProjectsByUsername);
 UserRoutes.get('/medias/:username', getMediasByUsername);
@@ -30,7 +30,7 @@ UserRoutes.get('/location/:username', getByLocation);
 UserRoutes.get('/website/:username', getByWebsite);
 UserRoutes.get('/twitter/:username', getByTwitter);
 UserRoutes.get('/linkedin/:username', getByLinkedIn);
-UserRoutes.post('/register', register);
+UserRoutes.post('/register', upload.single("avatar"), register);
 UserRoutes.post('/login', login);
 UserRoutes.patch('/:id', [authorize], upload.single("avatar"), update);
 UserRoutes.delete('/:id', [authorize], remove);

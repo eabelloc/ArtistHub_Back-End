@@ -30,7 +30,7 @@ const getById = async (req, res, next) => {
 
 const getByUsername = async (req, res, next) => {
   try {
-    const {username} = req.params;
+    const { username } = req.params;
     const user = await User.find({username:username}).populate("projects medias favProjects");
     if (!user) return next(setError(404, 'User not found'));
     return res.json({
@@ -39,7 +39,7 @@ const getByUsername = async (req, res, next) => {
         data: { user }
     });
 } catch (error) {
-    return next(setError(500, 'Failed user by username'))
+    return next(setError(500, error.message || 'Failed user by username'))
 }
 };
 
