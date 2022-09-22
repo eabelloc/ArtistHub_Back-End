@@ -4,7 +4,6 @@ const {
     getAll,
     getById,
     getByProjectTitle,
-    getDate,
     create,
     update,
     remove
@@ -15,7 +14,6 @@ const upload = require("../../middleware/file");
 ProjectRoutes.get("/", getAll);
 ProjectRoutes.get("/:id", getById);
 ProjectRoutes.get("/:projectTitle", getByProjectTitle);
-ProjectRoutes.get("/date", getDate);
 ProjectRoutes.post("/create", [authorize], upload.single("projectImage"), create);
 ProjectRoutes.patch("/:id", [authorize], upload.single("projectImage"), update);
 ProjectRoutes.delete("/:id", [authorize], remove);

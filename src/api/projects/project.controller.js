@@ -15,19 +15,6 @@ const getAll = async (req, res, next) => {
     }
   }
 
-    //TODO: EL GET BY DATE DE PROJECTS NO ESTA FUNCIONANDO!
-  const getDate = async (req, res, next) => {
-    try {
-      const projects = await Project.find().populate("users")//.sort({createdAt: "desc"})
-      return res.status(200).json({
-        message: 'All projects',
-        projects
-      })
-    } catch (error) {
-      return next(setError(500, error.message | 'Failed recover all projects'));
-    }
-  }
-
   const getById = async (req, res, next) => {
     try {
       const { id } = req.params;
@@ -115,7 +102,6 @@ const remove = async (req, res, next) => {
     getAll,
     getById,
     getByProjectTitle,
-    getDate,
     create,
     update,
     remove

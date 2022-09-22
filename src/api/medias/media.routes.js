@@ -4,7 +4,6 @@ const {
     getAll,
     getById,
     getByMediaTitle,
-    getDate,
     create,
     update,
     remove
@@ -15,7 +14,6 @@ const upload = require("../../middleware/file");
 MediaRoutes.get("/", getAll);
 MediaRoutes.get("/:id", getById);
 MediaRoutes.get("/:mediaTitle", getByMediaTitle);
-MediaRoutes.get("/date", getDate);
 MediaRoutes.post("/create", [authorize], upload.single("mediaImage"), create);
 MediaRoutes.patch("/:id", [authorize], upload.single("mediaImage"), update);
 MediaRoutes.delete("/:id", [authorize], remove);
